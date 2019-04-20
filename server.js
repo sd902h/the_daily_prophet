@@ -1,6 +1,5 @@
 var express = require("express");
 var exphbs = require("express-handlebars");
-var path = require("path");
 var mongoose = require("mongoose");
 
 // Our scraping tools
@@ -33,7 +32,12 @@ app.engine(
 app.set("view engine", "handlebars");
 
 app.get("/saved", function(req, res) {
-  res.render("saved");
+  db.Article.find({}).then(function(dbArticles) {
+    res.render("saved", {
+      articles: dbArticles,
+      saved: dbArticles.saved
+    });
+  });
 });
 // Connect to the Mongo DB
 var MONGODB_URI =
@@ -125,19 +129,7 @@ app.put("/articles/:id", function(req, res) {
   console.log(req.params);
   var articleID = req.params.id;
   console.log(articleID);
-  //   db.Article.findOneAndUpdate(
-  //     {
-  //       _id: req.params.id
-  //     },
-  //     {
-  //       $set: { saved: true }
-  //     }
-  //   );
-  //   db.Article.find({
-  //     _id: req.params.id
-  //   }).then(function(a) {
-  //     console.log(a);
-  //   });
+  db.Article.updateOne({ _id: req.params.id }, { saved: true });
 });
 
 // Route for saving/updating an Article's associated Note
