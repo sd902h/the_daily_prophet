@@ -125,11 +125,16 @@ app.get("/articles/:id", function(req, res) {
 });
 
 app.put("/articles/:id", function(req, res) {
+  console.log("*******");
   console.log(req.body);
   console.log(req.params);
   var articleID = req.params.id;
   console.log(articleID);
-  db.Article.updateOne({ _id: req.params.id }, { saved: true });
+  db.Article.updateOne({ _id: req.params.id }, { saved: true }).then(function(
+    res
+  ) {
+    console.log(res);
+  });
 });
 
 // Route for saving/updating an Article's associated Note
