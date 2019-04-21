@@ -49,20 +49,38 @@
     <div data-_id={{this._id}} class="card">
       <div class="card-header">
         <h3>
-          <a class="article-link" target="_blank" rel="noopener noreferrer" href="https://www.nytimes.com/2019/04/18/books/attention-books-jenny-odell.html">
+          <a class="article-link" target="_blank" rel="noopener noreferrer" href={{this.link}}>
             {{this.title}}
           </a>
-          <a class="btn btn-success save">Save Article</a>
+          <a class="btn btn-danger delete">Delete From Saved</a>
+          <a class="btn btn-info notes">Article Notes</a>
         </h3>
       </div>
       <div class="card-body">
-        The subject of attention is everywhere in publishing these days,
-        appearing in disparate genres like self-help, satire and fiction.
+        {{this.summary}}
       </div>
     </div>
     {{/if}}
     {{/each}}
   </div>
+  {{!-- <div class="bootbox modal fade show" tabindex="-1" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-body">
+        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">x</button>
+        <div class="container-fluid text-center">
+          <h4>Notes For Article:{{this.id}}</h4>
+          <hr>
+          <ul class="list-group note-container">
+            <li class="list-group-item">No notes for this article yet.</li>
+          </ul>
+          <textarea placeholder="New Note" cols="60" rows="4"></textarea>
+          <button class="btn btn-success save">
+            "Save Note"
+          </button>
+        </div>
+      </div>
+    </div>
+  </div> --}}
   <div class="alert alert-warning text-center">
     <h4>Uh Oh. Looks like we don't have any saved articles.</h4>
   </div>

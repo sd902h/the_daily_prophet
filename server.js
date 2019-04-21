@@ -57,41 +57,65 @@ app.get("/", function(req, res) {
   });
 });
 
-// A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
-  // First, we grab the body of the html with axios
-  axios.get("http://www.echojs.com/").then(function(response) {
-    // Then, we load that into cheerio and save it to $ for a shorthand selector
+  var uniqueArticles = 0;
+  axios.get("https://www.nytimes.com/").then(function(response) {
     var $ = cheerio.load(response.data);
-
-    // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
-      // Save an empty result object
+    $("section[data-testid='block-TopStories'] article").each(function(
+      i,
+      element
+    ) {
+      // console.log(element);
+      console.log(
+        $(this)
+          .find("li")
+          .text()
+      );
       var result = {};
-
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this)
-        .children("a")
-        .text();
-      result.link = $(this)
-        .children("a")
-        .attr("href");
-
-      // Create a new Article using the `result` object built from scraping
-      db.Article.create(result)
-        .then(function(dbArticle) {
-          // View the added result in the console
-          console.log(dbArticle);
+      if ($(this).find("li") != undefined) {
+        result.link =
+          "https://www.nytimes.com/" +
+          $(this)
+            .find("a")
+            .attr("href");
+        result.title = $(this)
+          .find("h2")
+          .text();
+        result.summary = $(this)
+          .find("li")
+          .text();
+        console.log(result);
+        db.Article.find({
+          link: result.link,
+          title: result.title,
+          summary: result.summary
         })
-        .catch(function(err) {
-          // If an error occurred, log it
-          console.log(err);
-        });
-    });
+          .then(function(dbArticle) {
+            console.log(dbArticle);
+            if (dbArticle.length === 0) {
+              uniqueArticles++;
 
-    // Send a message to the client
-    res.send("Scrape Complete");
+              db.Article.create(result)
+                .then(function(newArticle) {
+                  console.log(newArticle);
+                })
+                .catch(function(err) {
+                  console.log(err);
+                });
+            }
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
+      }
+    });
+    res.send("Scrape complete!");
   });
+  if (uniqueArticles > 0) {
+    res.json({
+      message: "There are " + uniqueArticles.toString() + " new articles."
+    });
+  }
 });
 
 // Route for getting all Articles from the db
@@ -125,9 +149,7 @@ app.get("/articles/:id", function(req, res) {
 });
 
 app.put("/articles/:id", function(req, res) {
-  console.log("*******");
   console.log(req.body);
-  console.log(req.params);
   var articleID = req.params.id;
   console.log(articleID);
   db.Article.updateOne({ _id: req.params.id }, { saved: true }).then(function(
