@@ -140,22 +140,6 @@ app.put("/articles/:id", function(req, res) {
   });
 });
 
-// app.put("/api/headlines/:id", function(req, res) {
-//   db.Article.findOneAndUpdate(
-//     { _id: req.params.id },
-//     { saved: true },
-//     { new: true }
-//   )
-//     .then(function(dbArticle) {
-//       // If we were able to successfully update an Article, send it back to the client
-//       res.json(dbArticle);
-//     })
-//     .catch(function(err) {
-//       // If an error occurred, send it to the client
-//       res.json(err);
-//     });
-// });
-
 //route to delete a single article
 app.delete("/api/headlines/:id", function(req, res) {
   db.Article.remove({ _id: req.params.id }).then(function(error, response) {
@@ -201,26 +185,6 @@ app.delete("/clear", function(req, res) {
     });
 });
 
-// app.get("/api/notes/:id", function(req, res) {
-//   db.Note.find({ _headlineId: req.params.id })
-//     .then(function(dbArticle) {
-//       res.json(dbArticle);
-//     })
-//     .catch(function(err) {
-//       res.json(err);
-//     });
-// });
-
-// app.get("/api/headlines/saved", function(req, res) {
-//   db.Article.find({ saved: true })
-//     .then(function(dbArticle) {
-//       res.json(dbArticle);
-//     })
-//     .catch(function(err) {
-//       res.json(err);
-//     });
-// });
-
 // Get a specific Article by id, populate it with its note(s)
 app.get("/notes", function(req, res) {
   db.Article.findOne({ _id: req.params.id })
@@ -239,7 +203,6 @@ app.get("/notes", function(req, res) {
 app.post("/articles/:id", function(req, res) {
   db.Note.create(req.body)
     .then(function(dbNote) {
-      // { new: true } tells query to return the updated Article, not the original
       return db.Article.findOneAndUpdate(
         { _id: req.params.id },
         { $push: { notes: dbNote._id } },

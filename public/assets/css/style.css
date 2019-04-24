@@ -5,7 +5,6 @@ html {
 
 body {
   margin-bottom: 80px;
-  background-image: url("../images/paper.png");
 }
 
 .card a:not([href]):not([tabindex]).scrape-new {
@@ -47,8 +46,8 @@ body {
 
 .jumbotron .background-image {
   height: 100%;
-  background-image: url("../images/newspaper.jpg");
-  background-size: cover;
+  background-image: url("../images/newspaper.png");
+  background-size: contain;
 }
 
 .jumbotron .caption {
