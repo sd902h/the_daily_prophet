@@ -53,7 +53,7 @@
             {{this.title}}
           </a>
           <a class="btn btn-danger delete">Delete From Saved</a>
-          <a class="btn btn-info notes">Article Notes</a>
+          <a href="/notes" class="btn btn-info notes">Article Notes</a>
         </h3>
       </div>
       <div class="card-body">
@@ -62,27 +62,6 @@
     </div>
     {{/if}}
     {{/each}}
-  </div>
-  {{!-- <div class="bootbox modal fade show" tabindex="-1" role="dialog" style="display: block;">
-    <div class="modal-dialog">
-      <div class="modal-body">
-        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">x</button>
-        <div class="container-fluid text-center">
-          <h4>Notes For Article:{{this.id}}</h4>
-          <hr>
-          <ul class="list-group note-container">
-            <li class="list-group-item">No notes for this article yet.</li>
-          </ul>
-          <textarea placeholder="New Note" cols="60" rows="4"></textarea>
-          <button class="btn btn-success save">
-            "Save Note"
-          </button>
-        </div>
-      </div>
-    </div>
-  </div> --}}
-  <div class="alert alert-warning text-center">
-    <h4>Uh Oh. Looks like we don't have any saved articles.</h4>
   </div>
 
   <div class="card">
@@ -94,6 +73,64 @@
         <a href="/">Browse Articles</a>
       </h4>
     </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="event-create">
+            <div class="form-group row">
+              <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="event-title" placeholder="Team Meeting">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputStart" class="col-sm-3 col-form-label">Event Date</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="event-start-date" placeholder="2019-01-01">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputStart" class="col-sm-3 col-form-label">Event Description</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="event-description" placeholder="Tell me more..">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputStart" class="col-sm-3 col-form-label">Start Time</label>
+              <div class="col-sm-9">
+                <input type="time" class="form-control" id="event-start-time">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputEnd" class="col-sm-3 col-form-label">End Time</label>
+              <div class="col-sm-9">
+                <input type="time" class="form-control" id="event-end-time">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="navEnd" class="col-sm-3 col-form-label">Event Location</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="event-location" placeholder="1234 Main St. Los Angeles, CA 90210">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="eventSubmit" type="button" href="/event" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+      {{!--
+    </div> --}}
   </div>
 
   <footer class="footer">

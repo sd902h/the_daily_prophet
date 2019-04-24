@@ -12,7 +12,7 @@ var NoteSchema = new Schema({
     required: true
   },
   // `body` is of type String
-  noteText: {
+  body: {
     type: String,
     required: true
   }
