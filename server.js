@@ -109,7 +109,10 @@ app.get("/", function(req, res) {
 });
 
 //Renders all saved articles
-app.get("/api/headlines?saved=true", function(req, res) {
+app.get("/api/headlines", function(req, res) {
+  // console.log(req.query);
+  // var saved = req.query.saved;
+
   db.Article.find({ saved: true }).then(function(dbArticles) {
     res.render("index", {
       articles: dbArticles,
@@ -186,7 +189,7 @@ app.delete("/clear", function(req, res) {
 });
 
 // Get a specific Article by id, populate it with its note(s)
-app.get("/notes", function(req, res) {
+app.get("/notes/:id", function(req, res) {
   db.Article.findOne({ _id: req.params.id })
     .populate("notes")
     .then(function(dbArticle) {

@@ -1,6 +1,6 @@
 /* global bootbox */
 $(document).ready(function() {
-  initPage();
+  // initPage();
   // Getting a reference to the article container div we will be rendering all articles inside of
   var articleContainer = $(".article-container");
   // Adding event listeners for dynamically generated buttons for deleting articles,
